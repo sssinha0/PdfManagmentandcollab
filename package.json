@@ -19,6 +19,7 @@
     "firebase": "^11.8.0",
     "firebase-admin": "^13.4.0",
     "multer": "^2.0.0",
-    "mysql2": "^3.14.1"
+    "mysql2": "^3.14.1",
+    "nodemailer": "^7.0.3"
   }
 }

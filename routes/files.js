@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const db = require('../db/mysqlConfig');
 const verifyToken = require('../middlewares/verifyToken');
+const nodemailer = require('nodemailer');
 
 const router = express.Router();
 
@@ -82,7 +83,7 @@ router.get('/:id/share', verifyToken, async (req, res) => {
 
     const file = rows[0];
     if (file.user_id !== req.user.uid) return res.status(403).json({ message: 'Unauthorized' });
-    const link = `http://localhost:4200/shared/${file.path.replace('.pdf','').split('/').pop()}`;
+    const link = `http://localhost:4200/shared/${file.path.replace('.pdf', '').split('/').pop()}`;
     res.json({ link });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -118,5 +119,56 @@ router.get('/:id/comments', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// POST /files/:id/share/email
+router.post('/:id/share/email', verifyToken, async (req, res) => {
+  const { email } = req.body;
+  const fileId = req.params.id;
+  console.log(fileId);
+  if (!email) return res.status(400).json({ message: 'Recipient email required' });
+
+  try {
+    // Get the file info from DB
+    const [rows] = await db.query('SELECT * FROM pdf_files WHERE name = ?', [fileId]);
+    if (rows.length === 0) return res.status(404).json({ message: 'File not found' });
+
+    const file = rows[0];
+    if (file.user_id !== req.user.uid) return res.status(403).json({ message: 'Unauthorized' });
+
+    // ✅ Generate link to open in shared-viewer
+    const shareLink = `http://localhost:4200/shared/${file.name}`;
+
+    // ✅ Setup email transport
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'your-email@gmail.com',
+        pass: 'your-app-password' // Use App Password, not your Gmail password
+      }
+    });
+
+    // ✅ Email options
+    const mailOptions = {
+      from: '"PDF App" rr0380106@gmail.com',
+      to: email,
+      subject: 'Shared PDF File',
+      html: `
+        <p>You have been invited to view a PDF file.</p>
+        <p><strong>${file.name}</strong></p>
+        <p>Click the link below to view it:</p>
+        <a href="${shareLink}" target="_blank">${shareLink}</a>
+      `
+    };
+
+    // ✅ Send email
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: 'Shareable link sent via email' });
+  } catch (err) {
+    console.error('Email error:', err.message);
+    res.status(500).json({ message: 'Failed to send email' });
+  }
+});
+
 
 module.exports = router;
