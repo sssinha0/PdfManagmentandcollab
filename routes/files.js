@@ -142,8 +142,8 @@ router.post('/:id/share/email', verifyToken, async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-app-password' // Use App Password, not your Gmail password
+        user: 'rr0380106@gmail.com',
+        pass: 'fgkt rydv lvfp ozwb' // Use App Password, not your Gmail password
       }
     });
 
