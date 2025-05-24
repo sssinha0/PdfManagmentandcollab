@@ -2,3 +2,11 @@
 @import "tailwindcss";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+::ng-deep .pdf-preview-dialog .mat-dialog-container {
+    padding: 0 !important;
+    border-radius: 16px;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  

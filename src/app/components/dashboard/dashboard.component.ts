@@ -9,11 +9,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { FileService } from '../../services/file.service';
-import { SafeUrlPipe } from "../../safe-url.pipe";
+import { MatDialog } from '@angular/material/dialog';
+import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
+import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, FormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatListModule, CommonModule, SafeUrlPipe],
+  imports: [MatCardModule, FormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatListModule, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -26,7 +28,8 @@ export class DashboardComponent {
   constructor(
     private fileService: FileService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -48,13 +51,6 @@ export class DashboardComponent {
       });
     }
   }
-
-  previewPDF(file: any) {
-    this.selectedPDF = {
-      url: `http://localhost:3000/api/files/view/${file.name}`
-    };
-  }
-
   sharePDF(fileId: string) {
     this.fileService.generateShareLink(fileId).subscribe((res: any) => {
       navigator.clipboard.writeText(res.link);
@@ -75,4 +71,22 @@ export class DashboardComponent {
   ngOnChanges(): void {
     this.filteredFiles = this.files.filter(f => f.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
   }
+  openShareDialog(file:any) {
+    let fileName = file?.name;
+      this.dialog.open(ShareDialogComponent, {
+        width: '400px',
+        data: { fileName}
+      });
+  } 
+  previewPDF(file: any) {
+    this.dialog.open(PdfPreviewDialogComponent, {
+      width: '90vw',
+      maxHeight: '95vh',
+      panelClass: 'pdf-preview-dialog',
+      data: {
+        name: file.name,
+        url: `http://localhost:3000/api/files/view/${file.name}`
+      }
+    });  
+  }      
 }

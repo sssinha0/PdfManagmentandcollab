@@ -1,0 +1,38 @@
+<h2 mat-dialog-title class="text-2xl font-bold text-purple-700">
+  📧 Share PDF via Email
+</h2>
+
+<mat-dialog-content class="mt-4">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Recipient's Email Address</mat-label>
+    <input
+      matInput
+      type="email"
+      [(ngModel)]="email"
+      class="text-base"
+      placeholder="e.g. user@example.com"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="mt-6">
+  <button
+    mat-stroked-button
+    color="warn"
+    (click)="cancel()"
+    class="px-4 py-2 rounded-lg"
+  >
+    ❌ Cancel
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="sendEmail()"
+    [disabled]="!email"
+    class="px-6 py-2 rounded-lg font-semibold shadow-sm"
+  >
+    📤 Send
+  </button>
+</mat-dialog-actions>
+

@@ -1,41 +1,52 @@
-<div class="p-4 bg-gray-100 min-h-screen">
-  <mat-card class="max-w-4xl mx-auto p-6 shadow-lg">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-2xl font-bold">Your PDFs</h2>
-      <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
+<div class="p-6 bg-gradient-to-tr from-blue-50 to-purple-100 min-h-screen">
+  <mat-card class="max-w-6xl mx-auto p-8 rounded-3xl shadow-2xl bg-white">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-4xl font-extrabold text-purple-700">📚 Your PDFs</h2>
+      <button mat-stroked-button color="warn" (click)="logout()" class="px-6 py-2 rounded-xl text-base">
+        🔒 Logout
+      </button>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-4 mb-4">
-      <input type="file" class="p-2 border border-gray-600" (change)="onFileSelected($event)" accept=".pdf" />
-      <mat-form-field class="flex-1" appearance="fill">
-        <mat-label>Search</mat-label>
-        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterFiles()" placeholder="Search PDFs..." />
+    <!-- Upload & Search -->
+    <div class="flex flex-col md:flex-row gap-6 items-center mb-8">
+      <input
+        type="file"
+        class="px-4 py-2 border-2 border-dashed border-purple-400 bg-purple-50 text-purple-800 font-medium rounded-lg w-full md:w-auto shadow"
+        (change)="onFileSelected($event)"
+        accept=".pdf"
+      />
+
+      <mat-form-field appearance="fill" class="flex-1 bg-white rounded-lg shadow-md">
+        <mat-label>🔎 Search PDFs...</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterFiles()" />
       </mat-form-field>
     </div>
 
-    <div *ngIf="filteredFiles.length === 0" class="text-gray-500 mt-4">
-      No files uploaded yet.
+    <!-- No Files Message -->
+    <div *ngIf="filteredFiles.length === 0" class="text-purple-600 text-center mt-10 text-lg italic">
+      😕 No files uploaded yet.
     </div>
 
-    <mat-list *ngIf="filteredFiles.length > 0">
-      <mat-list-item *ngFor="let file of filteredFiles" class="flex justify-between">
-        <div>
-          <p class="font-medium">{{ file.name }}</p>
-          <p class="text-xs text-gray-500">{{ file?.createdAt?.toDate() | date:'short' }}</p>
+    <!-- PDF File List as Cards -->
+    <div *ngIf="filteredFiles.length > 0" class="grid md:grid-cols-2 gap-6">
+      <mat-card *ngFor="let file of filteredFiles" class="rounded-2xl p-6 bg-gradient-to-r from-indigo-100 to-pink-100 shadow-xl">
+        <div class="mb-4">
+          <h3 class="text-xl font-semibold text-gray-800">{{ file.name }}</h3>
+          <p class="text-sm text-gray-600">{{ file?.createdAt?.toDate() | date:'short' }}</p>
         </div>
-        <div>
-          <button mat-button (click)="previewPDF(file)">Preview</button>
-          <button mat-button color="primary" (click)="sharePDF(file.id)">Share</button>
-          <button mat-button color="surface" (click)="detailsView(file)">Detailed View</button>
+
+        <div class="flex flex-wrap gap-3">
+          <button mat-stroked-button color="primary" (click)="previewPDF(file)">👁️ Preview</button>
+          <button mat-flat-button color="accent" (click)="sharePDF(file.id)">🔗 Share</button>
+          <button mat-stroked-button color="secondary" (click)="detailsView(file)">📄 Details</button>
+          <button mat-flat-button color="warn" (click)="openShareDialog(file)">📧 Share via Email</button>
         </div>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-
-    </mat-list>
-
-    <div *ngIf="selectedPDF" class="mt-6">
-      <h3 class="text-lg font-semibold">Preview: {{ selectedPDF.name }}</h3>
-      <iframe [src]="selectedPDF.url | safeUrl " width="100%" height="500px" class="mt-2 border rounded"></iframe>
+      </mat-card>
     </div>
+
+    
+
   </mat-card>
 </div>
