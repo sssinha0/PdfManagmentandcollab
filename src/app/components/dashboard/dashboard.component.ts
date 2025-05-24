@@ -66,7 +66,6 @@ export class DashboardComponent {
   }
   filterFiles(): void {
     this.filteredFiles = this.files.filter(f => f.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
-
   }
   ngOnChanges(): void {
     this.filteredFiles = this.files.filter(f => f.name.toLowerCase().includes(this.searchTerm.toLowerCase()));

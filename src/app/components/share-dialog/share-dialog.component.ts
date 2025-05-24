@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import { FileService } from '../../services/file.service';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-share-dialog',
   imports: [MatFormFieldModule,MatInputModule,MatDialogModule,FormsModule,MatButtonModule],
@@ -23,7 +24,12 @@ export class ShareDialogComponent {
   ) {}
 
   sendEmail() {
-    this.fileService.shareViaEmail(this.data?.fileName.replace(".pdf",''),this.email)
+    this.fileService.shareViaEmail(this.data?.fileName,this.email).subscribe({
+      next: () =>{ alert('📨 Email sent successfully!')
+        this.cancel();
+      },
+      error: (err) => alert('❌ Failed to send email: ' + err.message)
+    });;
   }
 
   cancel() {

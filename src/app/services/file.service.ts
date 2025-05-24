@@ -36,7 +36,7 @@ export class FileService {
     });
   }
   shareViaEmail(fileId:string,email:string){
-    return this.http.post(`${this.baseUrl}/${fileId}/share/email`, { email },{
+    return this.http.post(`${this.baseUrl}/${fileId}/share/email`, { "email":email },{
       headers: {
         Authorization: `Bearer ${this.auth.getToken()}`
       }
