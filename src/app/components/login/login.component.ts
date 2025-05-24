@@ -19,7 +19,9 @@ export class LoginComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   login() {
-    this.auth.login(this.email, this.password).subscribe(() => {
+    this.auth.login(this.email, this.password).subscribe((data:any) => {
+     localStorage.setItem("userId",data?.localId);
+     localStorage.setItem('auth_token',data?.idToken)
       this.router.navigate(['/dashboard']);
     },(err => alert(err.message)));
   }

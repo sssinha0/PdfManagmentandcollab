@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { idToken } from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<{ token: string }>(`${this.baseUrl}/login`, { email, password }).pipe(
       tap(res => {
-        localStorage.setItem(this.tokenKey, res.token);
+        // localStorage.setItem(this.tokenKey, idToken);
         this.isAuthenticatedSubject.next(true);
       })
     );

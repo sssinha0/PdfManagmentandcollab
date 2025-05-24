@@ -21,7 +21,7 @@ export class SignupComponent {
 
   signup() {
     this.auth.signup(this.email, this.password).subscribe(() => {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/login']);
     },(err => alert(err.message))
   );
   }
