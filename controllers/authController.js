@@ -1,5 +1,5 @@
 const { registerUser, signInUser } = require('../firebase/firebaseAuthService');
-const admin = require('../firebase/firebaseAdmin');
+const admin = require('../firebase/firebaseConfig');
 
 exports.register = async (req, res) => {
   const { email, password } = req.body;
