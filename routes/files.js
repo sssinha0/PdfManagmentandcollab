@@ -124,7 +124,6 @@ router.get('/:id/comments', async (req, res) => {
 router.post('/:id/share/email', verifyToken, async (req, res) => {
   const { email } = req.body;
   const fileId = req.params.id;
-  console.log(fileId);
   if (!email) return res.status(400).json({ message: 'Recipient email required' });
 
   try {
@@ -136,7 +135,7 @@ router.post('/:id/share/email', verifyToken, async (req, res) => {
     if (file.user_id !== req.user.uid) return res.status(403).json({ message: 'Unauthorized' });
 
     // ✅ Generate link to open in shared-viewer
-    const shareLink = `http://localhost:4200/shared/${file.name}`;
+    const shareLink = `http://localhost:4200/shared/${file.name.replace(".pdf",'')}`;
 
     // ✅ Setup email transport
     const transporter = nodemailer.createTransport({
