@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs';
   providedIn: 'root'
 })
 export class UploadService {
-  private baseUrl = 'http://localhost:3000/api/files';
+  private baseUrl = 'http://13.61.188.131:3000/api/files';
 
   constructor(private http: HttpClient) {}
 

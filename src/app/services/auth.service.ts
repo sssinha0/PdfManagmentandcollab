@@ -5,7 +5,7 @@ import { idToken } from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api/auth'; // Node API base URL
+  private baseUrl = 'http://13.61.188.131:3000/api/auth'; // Node API base URL
   private tokenKey = 'auth_token';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
