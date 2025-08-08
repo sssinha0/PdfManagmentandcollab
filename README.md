@@ -54,6 +54,9 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+## Demo Video and Images![WhatsApp Image 2025-08-08 at 5 01 35 PM](https://github.com/user-attachments/assets/f57736ae-5c67-40b4-9a89-101844bb6c91)
+![WhatsApp Image 2025-08-08 at 5 01 36 PM (1)](https://github.com/user-attachments/assets/b4b4b276-af8c-45db-b6db-f7046a67ca8b)
+![WhatsApp Image 2025-08-08 at 5 01 37 PM](https://github.com/user-attachments/assets/ea4fff4f-71de-4501-8803-f6ddfdf8d22e)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+https://drive.google.com/file/d/1iCfxBRPXJxSjq2yAUEJr-OFOHhntJsv9/view?usp=sharing
